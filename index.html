@@ -1,66 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            padding-top: 50px;
-        }
-        .container {
-            width: 100%;
-            max-width: 300px;
-        }
-        input, button {
-            display: block;
-            margin: 10px auto;
-            padding: 10px;
-            font-size: 18px;
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        button {
-            cursor: pointer;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+  <style>
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding-top: 50px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 350px; 
+      padding: 20px;
+      border: 2px; 
+      border-radius: 10px;
+      background-color: black;
+    }
+
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 18px;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+      background-color: pink;
+    }
+
+    .buttonrow {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .buttonrow button, .controlrow button {
+      flex: 1 1 45%;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: palevioletred;
+      color: white;
+      font-weight: bold;
+    }
+
+    .controlrow {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    .buttonrow button:hover, .controlrow button:hover {
+    background-color: rgb(126, 62, 83);
+    }
+
+    .clear-btn:hover {
+    background-color: orangered !important;
+    }
+
+    .disable-btn:hover {
+    background-color: darkred !important;
+    }
+
+    .enable-btn:hover {
+    background-color: darkgreen !important;
+    }
+
+  </style>
+
 </head>
 <body>
     <div class="container">
-        <h2>Calculator</h2>
-        <input type="number" id="num1" placeholder="Enter first number">
-        <input type="number" id="num2" placeholder="Enter second number">
-        <input type="text" id="result" placeholder="Result" readonly>
-        <button onclick="addNumbers()">Add</button>
-        <button onclick="clearFields()">Erase</button>
-    </div>
-    
-    <script>
-        function addNumbers() {
-            let num1 = parseFloat(document.getElementById('num1').value) || 0;
-            let num2 = parseFloat(document.getElementById('num2').value) || 0;
-            document.getElementById('result').value = num1 + num2;
-        }
+            <h1 style="color: palevioletred; font-family: Arial, sans-serif;">Calculator</h1>
+            <input type="number" id="num1" placeholder="Enter first number">
+            <input type="number" id="num2" placeholder="Enter second number">
+            <input type="text" id="result" placeholder="Result" readonly>
 
-        function clearFields() {
-            document.getElementById('num1').value = "";
-            document.getElementById('num2').value = "";
-            document.getElementById('result').value = "";
-        }
-    </script>
+        <div class="buttonrow">
+            <button onclick="addNumbers()">Add</button>
+            <button onclick="subtractNumbers()">Subtract</button>
+            <button onclick="multiplyNumbers()">Multiply</button>
+            <button onclick="divideNumbers()">Divide</button>
+            <button onclick="clearFields()" class="clear-btn">Clear</button>
+        </div>
+
+        <div class="controlrow">
+            <button onclick="disableInputs()" class="disable-btn">Disable Input</button>
+            <button onclick="enableInputs()" class="enable-btn">Enable Input</button>
+        </div>
+    </div>  
+
+    <script>
+    function getValues() {
+        let num1 = parseFloat(document.getElementById('num1').value) || 0;
+        let num2 = parseFloat(document.getElementById('num2').value) || 0;
+        return [num1, num2];
+    }
+
+    function addNumbers() {
+      const [num1, num2] = getValues();
+      document.getElementById('result').value = num1 + num2;
+    }
+
+    function subtractNumbers() {
+      const [num1, num2] = getValues();
+      document.getElementById('result').value = num1 - num2;
+    }
+
+    function multiplyNumbers() {
+      const [num1, num2] = getValues();
+      document.getElementById('result').value = num1 * num2;
+    }
+
+    function divideNumbers() {
+      const [num1, num2] = getValues();
+      if (num2 === 0) {
+        document.getElementById('result').value = "Error (÷ by 0)";
+      } else {
+        document.getElementById('result').value = num1 / num2;
+      }
+    }
+
+    function clearFields() {
+      document.getElementById('num1').value = "";
+      document.getElementById('num2').value = "";
+      document.getElementById('result').value = "";
+    }
+
+    function disableInputs() {
+      document.getElementById('num1').disabled = true;
+      document.getElementById('num2').disabled = true;
+    }
+
+    function enableInputs() {
+      document.getElementById('num1').disabled = false;
+      document.getElementById('num2').disabled = false;
+    }
+
+  </script>
 </body>
 </html>
